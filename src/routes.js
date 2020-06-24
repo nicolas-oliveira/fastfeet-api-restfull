@@ -20,5 +20,8 @@ routes.post('/recipient', authMiddleware, RecipientController.store);
 routes.put('/recipient/:id', authMiddleware, RecipientController.update);
 
 routes.post('/deliverer', authMiddleware, DelivererController.store);
+routes.get('/deliverer', authMiddleware, DelivererController.index);
+routes.put('/deliverer/:id', authMiddleware, DelivererController.delete);
+// routes.post('/deliverer/file/:id', authMiddleware, DelivererController.store);
 
 export default routes;
