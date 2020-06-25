@@ -12,6 +12,7 @@ module.exports = {
 
 		return response.json(deliverers);
 	},
+
 	async store(request, response) {
 		const delivererExists = await Deliverer.findOne({
 			where: { email: request.body.email },
@@ -27,6 +28,7 @@ module.exports = {
 
 		return response.json({ id, name, email });
 	},
+
 	async delete(request, response) {
 		const delivExists = await Deliverer.findOne({
 			where: { id: request.params.id },
@@ -39,5 +41,13 @@ module.exports = {
 		await Deliverer.destroy({ where: { id: request.params.id } });
 
 		return response.status(200).json();
+	},
+
+	async update(request, response) {
+		const { id, name, email, updated_at } = await Deliverer.update(
+			request.body
+		);
+
+		return response.json({ id, name, email, updated_at });
 	},
 };

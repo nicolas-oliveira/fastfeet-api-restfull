@@ -19,9 +19,10 @@ routes.post('/session', SessionController.store);
 routes.post('/recipient', authMiddleware, RecipientController.store);
 routes.put('/recipient/:id', authMiddleware, RecipientController.update);
 
-routes.post('/deliverer', authMiddleware, DelivererController.store);
 routes.get('/deliverer', authMiddleware, DelivererController.index);
-routes.put('/deliverer/:id', authMiddleware, DelivererController.delete);
-// routes.post('/deliverer/file/:id', authMiddleware, DelivererController.store);
+routes.post('/deliverer', authMiddleware, DelivererController.store);
+routes.delete('/deliverer/:id', authMiddleware, DelivererController.delete);
+routes.put('/deliverer', authMiddleware, DelivererController.store);
+// routes.post('/deliverer/:id/file/', authMiddleware, DelivererController.store);
 
 export default routes;
