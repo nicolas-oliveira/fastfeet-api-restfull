@@ -16,13 +16,15 @@ routes.put('/adm', authMiddleware, AdmController.update);
 
 routes.post('/session', SessionController.store);
 
-routes.post('/recipient', authMiddleware, RecipientController.store);
-routes.put('/recipient/:id', authMiddleware, RecipientController.update);
+routes.use(authMiddleware); // Use auth for all under
 
-routes.get('/deliverer', authMiddleware, DelivererController.index);
-routes.post('/deliverer', authMiddleware, DelivererController.store);
-routes.delete('/deliverer/:id', authMiddleware, DelivererController.delete);
-routes.put('/deliverer', authMiddleware, DelivererController.store);
-// routes.post('/deliverer/:id/file/', authMiddleware, DelivererController.store);
+routes.post('/recipient', RecipientController.store);
+routes.put('/recipient/:id', RecipientController.update);
+
+routes.get('/deliverer', DelivererController.index); // List all
+routes.get('/deliverer/:id', DelivererController.index); // List one
+routes.post('/deliverer', DelivererController.store);
+routes.put('/deliverer/:id', DelivererController.update);
+routes.delete('/deliverer/:id', DelivererController.delete);
 
 export default routes;

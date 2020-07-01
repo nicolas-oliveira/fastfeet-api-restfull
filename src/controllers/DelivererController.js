@@ -1,7 +1,22 @@
 import Deliverer from '../models/Deliverer';
+import catchMessages from '../utils/catchMessages';
 
 module.exports = {
 	async index(request, response) {
+		const { id } = request.params;
+
+		// Get deliverer when route have id param
+		if (id) {
+			const deliverer = await Deliverer.findOne({ where: { id } });
+
+			if (!deliverer) {
+				return response.status(400).json({ error: 'Deliverer not found' });
+			}
+
+			return response.json(deliverer);
+		}
+
+		// Get all deliverers with pagination
 		const { page = 1 } = request.query;
 
 		const deliverers = await Deliverer.findAll({
@@ -14,19 +29,23 @@ module.exports = {
 	},
 
 	async store(request, response) {
-		const delivererExists = await Deliverer.findOne({
-			where: { email: request.body.email },
-		});
+		try {
+			const delivererExists = await Deliverer.findOne({
+				where: { email: request.body.email },
+			});
 
-		if (delivererExists) {
-			return response.status(400).json({ erro: 'Deliverer already exists' });
+			if (delivererExists) {
+				return response.status(400).json({ error: 'Deliverer already exists' });
+			}
+
+			const { name, email } = request.body;
+
+			const { id } = await Deliverer.create({ name, email });
+
+			return response.json({ id, name, email });
+		} catch (err) {
+			return response.status(400).json(catchMessages(err));
 		}
-
-		const { name, email } = request.body;
-
-		const { id } = await Deliverer.create({ name, email });
-
-		return response.json({ id, name, email });
 	},
 
 	async delete(request, response) {
@@ -44,10 +63,24 @@ module.exports = {
 	},
 
 	async update(request, response) {
-		const { id, name, email, updated_at } = await Deliverer.update(
-			request.body
-		);
+		try {
+			const delivExists = await Deliverer.findOne({
+				where: { id: request.params.id },
+			});
 
-		return response.json({ id, name, email, updated_at });
+			if (!delivExists) {
+				return response.status(400).json({ error: 'Deliverer not found' });
+			}
+
+			await Deliverer.update(request.body, {
+				where: {
+					id: request.params.id,
+				},
+			});
+
+			return response.json();
+		} catch (err) {
+			return response.status(400).json(catchMessages(err));
+		}
 	},
 };

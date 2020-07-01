@@ -28,6 +28,12 @@ class Deliverer extends Model {
 			},
 			{ sequelize }
 		);
+
+		return this;
+	}
+
+	static associate(model) {
+		this.belongsTo(model.File, { foreignKey: 'avatar_id', as: 'avatar' });
 	}
 }
 
