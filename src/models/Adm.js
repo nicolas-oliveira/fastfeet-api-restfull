@@ -9,6 +9,9 @@ class Adm extends Model {
 					type: DataTypes.STRING,
 					allowNull: false,
 					validate: {
+						notNull: {
+							msg: 'Name is required',
+						},
 						notEmpty: {
 							msg: "Name can't be empty",
 						},
@@ -18,6 +21,9 @@ class Adm extends Model {
 					type: DataTypes.STRING,
 					allowNull: false,
 					validate: {
+						notNull: {
+							msg: 'Email is required',
+						},
 						notEmpty: {
 							msg: "Email can't be empty",
 						},
@@ -30,6 +36,9 @@ class Adm extends Model {
 					type: DataTypes.VIRTUAL,
 					allowNull: false,
 					validate: {
+						notNull: {
+							msg: 'Password is required',
+						},
 						notEmpty: {
 							msg: "Password can't be empty",
 						},

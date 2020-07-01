@@ -4,8 +4,14 @@ import catchMessages from '../utils/catchMessages';
 module.exports = {
 	async store(request, response) {
 		try {
+			const { zip_code } = request.body;
+
+			if (!zip_code) {
+				return response.status(400).json({ error: 'Zip_code is required' });
+			}
+
 			const adressExists = await Recipient.findOne({
-				where: { zip_code: request.body.zip_code },
+				where: { zip_code },
 			});
 
 			if (adressExists) {
@@ -14,15 +20,7 @@ module.exports = {
 
 			const { adm_id } = request;
 
-			const {
-				name,
-				number,
-				street,
-				city,
-				state,
-				country,
-				zip_code,
-			} = request.body;
+			const { name, number, street, city, state, country } = request.body;
 
 			const adress = await Recipient.create({
 				name,

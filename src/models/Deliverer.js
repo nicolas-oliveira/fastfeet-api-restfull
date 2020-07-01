@@ -8,6 +8,9 @@ class Deliverer extends Model {
 					type: DataTypes.STRING,
 					allowNull: false,
 					validate: {
+						notNull: {
+							msg: "Name can't be null",
+						},
 						notEmpty: {
 							msg: "Name can't be empty",
 						},
@@ -17,6 +20,9 @@ class Deliverer extends Model {
 					type: DataTypes.STRING,
 					allowNull: false,
 					validate: {
+						notNull: {
+							msg: 'Email is required',
+						},
 						notEmpty: {
 							msg: "Email can't be empty",
 						},

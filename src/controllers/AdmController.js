@@ -4,8 +4,14 @@ import catchMessages from '../utils/catchMessages';
 module.exports = {
 	async store(request, response) {
 		try {
+			const { name, email, password } = request.body;
+
+			if (!password) {
+				return response.status(400).json({ error: 'Password is required' });
+			}
+
 			const admExists = await Adm.findOne({
-				where: { email: request.body.email },
+				where: { email },
 			});
 
 			if (admExists) {
@@ -13,8 +19,6 @@ module.exports = {
 					.status(400)
 					.json({ error: 'Administrator already exists.' });
 			}
-
-			const { name, email, password } = request.body;
 
 			const { id } = await Adm.create({ name, email, password });
 
@@ -31,7 +35,7 @@ module.exports = {
 			const adm = await Adm.findByPk(request.adm_id);
 
 			if (!oldPassword) {
-				return response.status(401).json({ error: 'Password not provided' });
+				return response.status(400).json({ error: 'Password is required' });
 			}
 
 			if (!(await adm.checkPassword(oldPassword))) {
@@ -62,9 +66,7 @@ module.exports = {
 
 			return response.json({ id, name, email });
 		} catch (err) {
-			const messages = catchMessages(err);
-
-			return response.status(400).json(messages);
+			return response.status(400).json(catchMessages(err));
 		}
 	},
 };

@@ -8,11 +8,11 @@ class Recipient extends Model {
 					type: DataTypes.STRING,
 					allowNull: false,
 					validate: {
+						notNull: {
+							msg: 'Name is required',
+						},
 						notEmpty: {
 							msg: "Name can't be empty",
-						},
-						notNull: {
-							msg: 'Name not found',
 						},
 					},
 				},
@@ -20,8 +20,14 @@ class Recipient extends Model {
 					type: DataTypes.NUMBER,
 					allowNull: false,
 					validate: {
+						notNull: {
+							msg: 'Number is required',
+						},
 						notEmpty: {
 							msg: "Number can't be empty",
+						},
+						isDecimal: {
+							msg: 'Number need to be decimal',
 						},
 						min: {
 							args: 1,
@@ -33,6 +39,9 @@ class Recipient extends Model {
 					type: DataTypes.STRING,
 					allowNull: false,
 					validate: {
+						notNull: {
+							msg: 'Street is required',
+						},
 						notEmpty: {
 							msg: "Street can't be empty",
 						},
@@ -51,6 +60,9 @@ class Recipient extends Model {
 					type: DataTypes.STRING,
 					allowNull: false,
 					validate: {
+						notNull: {
+							msg: 'State is required',
+						},
 						notEmpty: {
 							msg: "State can't be empty",
 						},
@@ -60,11 +72,11 @@ class Recipient extends Model {
 					type: DataTypes.STRING,
 					allowNull: false,
 					validate: {
+						notNull: {
+							msg: 'Zip_code is required',
+						},
 						notEmpty: {
 							msg: "Zip_code can't be empty",
-						},
-						notNull: {
-							msg: 'Zip_code not found',
 						},
 					},
 				},
@@ -72,6 +84,9 @@ class Recipient extends Model {
 					type: DataTypes.STRING,
 					allowNull: false,
 					validate: {
+						notNull: {
+							msg: 'Country is required',
+						},
 						notEmpty: {
 							msg: "Country can't be empty",
 						},

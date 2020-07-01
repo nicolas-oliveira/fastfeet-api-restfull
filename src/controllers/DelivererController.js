@@ -30,15 +30,19 @@ module.exports = {
 
 	async store(request, response) {
 		try {
+			const { name, email } = request.body;
+
+			if (!name) {
+				return response.status(400).json({ error: 'Name is required' });
+			}
+
 			const delivererExists = await Deliverer.findOne({
-				where: { email: request.body.email },
+				where: { email },
 			});
 
 			if (delivererExists) {
 				return response.status(400).json({ error: 'Deliverer already exists' });
 			}
-
-			const { name, email } = request.body;
 
 			const { id } = await Deliverer.create({ name, email });
 
