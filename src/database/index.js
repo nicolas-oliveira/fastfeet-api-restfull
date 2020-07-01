@@ -4,13 +4,19 @@ import databaseConfig from '../config/database';
 
 import Adm from '../models/Adm';
 import Recipient from '../models/Recipient';
-import Deliverers from '../models/Deliverer';
-// import File from '../models/File';
+import Deliverer from '../models/Deliverer';
+import File from '../models/File';
+
 const connection = new Sequelize(databaseConfig);
 
 Adm.init(connection);
+
 Recipient.init(connection);
 Recipient.associate(connection.models);
-Deliverers.init(connection);
+
+Deliverer.init(connection);
+
+File.init(connection);
+Deliverer.associate(connection.models);
 
 export default connection;
