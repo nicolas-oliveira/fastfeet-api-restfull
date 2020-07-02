@@ -1,31 +1,31 @@
-import Deliverer from '../models/Deliverer';
+import Deliveryman from '../models/Deliveryman';
 import catchMessages from '../utils/catchMessages';
 
 module.exports = {
 	async index(request, response) {
 		const { id } = request.params;
 
-		// Get deliverer when route have id param
+		// Get deliveryman when route have id param
 		if (id) {
-			const deliverer = await Deliverer.findOne({ where: { id } });
+			const deliveryman = await Deliveryman.findOne({ where: { id } });
 
-			if (!deliverer) {
-				return response.status(400).json({ error: 'Deliverer not found' });
+			if (!deliveryman) {
+				return response.status(400).json({ error: 'Deliveryman not found' });
 			}
 
-			return response.json(deliverer);
+			return response.json(deliveryman);
 		}
 
-		// Get all deliverers with pagination
+		// Get all deliverymans with pagination
 		const { page = 1 } = request.query;
 
-		const deliverers = await Deliverer.findAll({
+		const deliverymans = await Deliveryman.findAll({
 			attributes: ['id', 'name', 'email', 'avatar_id'],
 			limit: 5,
 			offset: (page - 1) * 5,
 		});
 
-		return response.json(deliverers);
+		return response.json(deliverymans);
 	},
 
 	async store(request, response) {
@@ -36,15 +36,17 @@ module.exports = {
 				return response.status(400).json({ error: 'Name is required' });
 			}
 
-			const delivererExists = await Deliverer.findOne({
+			const deliverymanExists = await Deliveryman.findOne({
 				where: { email },
 			});
 
-			if (delivererExists) {
-				return response.status(400).json({ error: 'Deliverer already exists' });
+			if (deliverymanExists) {
+				return response
+					.status(400)
+					.json({ error: 'deliveryman already exists' });
 			}
 
-			const { id } = await Deliverer.create({ name, email });
+			const { id } = await Deliveryman.create({ name, email });
 
 			return response.json({ id, name, email });
 		} catch (err) {
@@ -53,30 +55,30 @@ module.exports = {
 	},
 
 	async delete(request, response) {
-		const delivExists = await Deliverer.findOne({
+		const delivExists = await Deliveryman.findOne({
 			where: { id: request.params.id },
 		});
 
 		if (!delivExists) {
-			return response.status(400).json({ error: 'Deliverer not found' });
+			return response.status(400).json({ error: 'deliveryman not found' });
 		}
 
-		await Deliverer.destroy({ where: { id: request.params.id } });
+		await Deliveryman.destroy({ where: { id: request.params.id } });
 
 		return response.status(200).json();
 	},
 
 	async update(request, response) {
 		try {
-			const delivExists = await Deliverer.findOne({
+			const delivExists = await Deliveryman.findOne({
 				where: { id: request.params.id },
 			});
 
 			if (!delivExists) {
-				return response.status(400).json({ error: 'Deliverer not found' });
+				return response.status(400).json({ error: 'deliveryman not found' });
 			}
 
-			await Deliverer.update(request.body, {
+			await Deliveryman.update(request.body, {
 				where: {
 					id: request.params.id,
 				},

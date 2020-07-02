@@ -1,9 +1,9 @@
 import File from '../models/File';
-import Deliverer from '../models/Deliverer';
+import Deliveryman from '../models/Deliveryman';
 
 module.exports = {
 	async store(request, response) {
-		const deliverExists = await Deliverer.findOne({
+		const deliverExists = await Deliveryman.findOne({
 			where: { id: request.params.id },
 		});
 
@@ -18,7 +18,7 @@ module.exports = {
 			path,
 		});
 
-		await Deliverer.update(
+		await Deliveryman.update(
 			{ avatar_id: id },
 			{
 				where: { id: request.params.id },
