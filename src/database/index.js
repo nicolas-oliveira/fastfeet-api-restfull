@@ -6,17 +6,14 @@ import Adm from '../models/Adm';
 import Recipient from '../models/Recipient';
 import Deliveryman from '../models/Deliveryman';
 import File from '../models/File';
+import Delivery from '../models/Delivery';
 
 const connection = new Sequelize(databaseConfig);
 
-Adm.init(connection);
+const models = [Adm, Recipient, Deliveryman, File, Delivery];
 
-Recipient.init(connection);
-Recipient.associate(connection.models);
-
-Deliveryman.init(connection);
-
-File.init(connection);
-Deliveryman.associate(connection.models);
+models
+	.map((model) => model.init(connection))
+	.map((model) => model.associate && model.associate(connection.models));
 
 export default connection;

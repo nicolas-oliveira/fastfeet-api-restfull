@@ -6,8 +6,14 @@ module.exports = {
 		try {
 			const { name, email, password } = request.body;
 
+			if (!name) {
+				return response.status(400).json({ error: 'Name is required' });
+			}
 			if (!password) {
 				return response.status(400).json({ error: 'Password is required' });
+			}
+			if (!email) {
+				return response.status(400).json({ error: 'Email is required' });
 			}
 
 			const admExists = await Adm.findOne({

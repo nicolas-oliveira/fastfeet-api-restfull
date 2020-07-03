@@ -6,6 +6,7 @@ import SessionController from './controllers/SessionController';
 import RecipientController from './controllers/RecipientController';
 import DeliverymanController from './controllers/DeliverymanController';
 import FileController from './controllers/FileController';
+import DeliveryController from './controllers/DeliveryController';
 
 import authMiddleware from './middlewares/auth';
 
@@ -25,11 +26,20 @@ routes.use(authMiddleware); // Use auth for all under
 routes.post('/recipient', RecipientController.store);
 routes.put('/recipient/:id', RecipientController.update);
 
-routes.get('/deliverer', DeliverymanController.index); // List all
-routes.get('/deliverer/:id', DeliverymanController.index); // List one
-routes.post('/deliverer', DeliverymanController.store);
-routes.put('/deliverer/:id', DeliverymanController.update);
-routes.delete('/deliverer/:id', DeliverymanController.delete);
-routes.post('/deliverer/:id/file', upload.single('file'), FileController.store);
+routes.get('/deliveryman', DeliverymanController.index); // List all
+routes.get('/deliveryman/:id', DeliverymanController.index); // List one
+routes.post('/deliveryman', DeliverymanController.store);
+routes.put('/deliveryman/:id', DeliverymanController.update);
+routes.delete('/deliveryman/:id', DeliverymanController.delete);
+routes.post(
+	'/deliveryman/:id/file',
+	upload.single('file'),
+	FileController.store
+);
+
+routes.post('/deliveries', DeliveryController.store);
+routes.get('/deliveries', DeliveryController.index);
+routes.put('/deliveries/:id', DeliveryController.update);
+routes.delete('/deliveries/:id', DeliveryController.delete);
 
 export default routes;
