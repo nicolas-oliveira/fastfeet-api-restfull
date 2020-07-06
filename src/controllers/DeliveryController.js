@@ -1,7 +1,8 @@
 import Delivery from '../models/Delivery';
-import Deliveryman from '../models/Deliveryman';
-import Recipient from '../models/Recipient';
+// import Deliveryman from '../models/Deliveryman';
+// import Recipient from '../models/Recipient';
 import catchMessages from '../utils/catchMessages';
+// import Mail from '../lib/Mail';
 
 module.exports = {
 	async index(request, response) {
@@ -30,13 +31,13 @@ module.exports = {
 			if (!recipient_id) {
 				return response
 					.status(400)
-					.json({ errors: 'Recipient_id is required' });
+					.json({ errors: ['Recipient_id is required'] });
 			}
 
 			if (!deliveryman_id) {
 				return response
 					.status(400)
-					.json({ error: 'Deliveryman_id is required' });
+					.json({ errors: ['Deliveryman_id is required'] });
 			}
 
 			if (!product) {
@@ -45,23 +46,25 @@ module.exports = {
 					.json({ errors: ['Product name is required'] });
 			}
 
-			const recipientExists = await Recipient.findOne({
-				where: { id: recipient_id },
-			});
+			const recipientExists = await Delivery.findByPk(recipient_id);
 
 			if (!recipientExists) {
 				return response.status(400).json({ error: 'Recipient ID not found' });
 			}
 
-			const deliverymanExists = await Deliveryman.findOne({
-				where: { id: deliveryman_id },
-			});
+			const deliverymanExists = await Delivery.findByPk(deliveryman_id);
 
 			if (!deliverymanExists) {
 				return response.status(400).json({ error: 'Deliveryman ID not found' });
 			}
 
 			await Delivery.create({ recipient_id, deliveryman_id, product });
+
+			// await Mail.sendMail({
+			// 	to: `${} <${}>`,
+			// 	subject: '',
+			// 	text: '',
+			// });
 
 			return response
 				.status(200)
@@ -85,17 +88,13 @@ module.exports = {
 
 		const { recipient_id, deliveryman_id } = request.body;
 
-		const recipientExists = await Recipient.findOne({
-			where: { id: recipient_id },
-		});
+		const recipientExists = await Delivery.findByPk(recipient_id);
 
 		if (!recipientExists) {
 			return response.status(400).json({ error: 'Recipient ID not found' });
 		}
 
-		const deliverymanExists = await Deliveryman.findOne({
-			where: { id: deliveryman_id },
-		});
+		const deliverymanExists = await Delivery.findByPk(deliveryman_id);
 
 		if (!deliverymanExists) {
 			return response.status(400).json({ error: 'Deliveryman ID not found' });
