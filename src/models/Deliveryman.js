@@ -40,6 +40,10 @@ class Deliveryman extends Model {
 
 	static associate(model) {
 		this.belongsTo(model.File, { foreignKey: 'avatar_id', as: 'avatar' });
+		this.hasMany(model.Delivery, {
+			foreignKey: 'deliveryman_id',
+			as: 'deliveryman',
+		});
 	}
 }
 

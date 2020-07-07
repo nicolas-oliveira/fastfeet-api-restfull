@@ -64,6 +64,10 @@ class Adm extends Model {
 	checkPassword(password) {
 		return bcrypt.compare(password, this.password_hash);
 	}
+
+	static associate(models) {
+		this.hasMany(models.Recipient, { foreignKey: 'adm_id', as: 'owner' });
+	}
 }
 
 export default Adm;
