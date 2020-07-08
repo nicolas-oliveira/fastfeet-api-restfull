@@ -1,0 +1,14 @@
+<div style="color: aliceblue; background-color: #7d40e7; padding: 15px; border-bottom: #5c2bb1 5px solid;">
+	<h1>Notificação de entrega</h1>
+</div>
+
+<div style="padding: 10px 20px;">
+	<strong>Olá, {{ deliveryman }}</strong>
+
+	<p>Uma entrega está disponível para a saída de estoque:</p>
+
+	<strong>Produto:</strong> {{ product }}<br>
+	<strong>Destinatário:</strong> {{ street }}, {{ number }} {{ city }} - {{ state }}, {{ country }}<br>
+	<strong>CEP:</strong> {{ zip_code }}<br><br>
+	<small>Aguardaremos a retirada em horário comercial das 8:00 às 18:00.</small><br>
+</div>

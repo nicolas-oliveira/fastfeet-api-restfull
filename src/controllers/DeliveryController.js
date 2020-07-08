@@ -2,7 +2,7 @@ import Delivery from '../models/Delivery';
 import Deliveryman from '../models/Deliveryman';
 import Recipient from '../models/Recipient';
 import catchMessages from '../utils/catchMessages';
-// import Mail from '../lib/Mail';
+import Mail from '../lib/Mail';
 
 module.exports = {
 	async index(request, response) {
@@ -60,20 +60,30 @@ module.exports = {
 
 			await Delivery.create({ recipient_id, deliveryman_id, product });
 
-			// await Mail.sendMail({
-			// 	to: `${deliverymanExists.name} <${deliverymanExists.email}>`,
-			// 	subject: 'Nova entrega',
-			// 	text: 'Foi verificado que há uma nova entrega',
-			// });
+			await Mail.sendMail({
+				to: `${deliverymanExists.name} <${deliverymanExists.email}>`,
+				subject: 'Nova entrega',
+				template: 'newdelivery',
+				context: {
+					deliveryman: deliverymanExists.name,
+					product,
+					street: recipientExists.street,
+					number: recipientExists.number.toString(),
+					city: recipientExists.city,
+					state: recipientExists.state,
+					country: recipientExists.country,
+					zip_code: recipientExists.zip_code,
+				},
+			});
 
 			return response
 				.status(200)
 				.json({ recipient_id, deliveryman_id, product });
 		} catch (err) {
-			// if (!err.errors) {
-			// 	// Apenas desenvolvimento
-			// 	console.log(err);
-			// }
+			if (!err.errors) {
+				// Apenas desenvolvimento
+				console.log(err);
+			}
 			return response.status(400).json(catchMessages(err));
 		}
 	},
