@@ -100,7 +100,7 @@ class Recipient extends Model {
 	}
 
 	static associate(models) {
-		this.hasMany(models.Adm, { foreignKey: 'adm_id', as: 'owner' });
+		this.belongsTo(models.Adm, { foreignKey: 'adm_id', as: 'owner' });
 		this.hasMany(models.Delivery, {
 			foreignKey: 'recipient_id',
 			as: 'recipient',
