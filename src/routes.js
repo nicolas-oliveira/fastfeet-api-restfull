@@ -7,6 +7,8 @@ import RecipientController from './controllers/RecipientController';
 import DeliverymanController from './controllers/DeliverymanController';
 import FileController from './controllers/FileController';
 import DeliveryController from './controllers/DeliveryController';
+import InventoryController from './controllers/InventoryController';
+import FinishedInventoryController from './controllers/FinishedInventoryController';
 
 import authMiddleware from './middlewares/auth';
 
@@ -20,6 +22,11 @@ routes.post('/adm', AdmController.store);
 routes.put('/adm', authMiddleware, AdmController.update);
 
 routes.post('/session', SessionController.store);
+
+routes.get('/inventory/:id', InventoryController.index);
+routes.put('/inventory/:id', InventoryController.update);
+
+routes.get('/inventory/:id/deliveries', FinishedInventoryController.index);
 
 routes.use(authMiddleware); // Use auth for all under
 
