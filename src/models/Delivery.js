@@ -47,6 +47,9 @@ class Delivery extends Model {
 						isDate: {
 							msg: 'Incorrect field for date',
 						},
+						notEmpty: {
+							msg: "Product can't be empty",
+						},
 					},
 				},
 				start_date: {
@@ -56,6 +59,9 @@ class Delivery extends Model {
 						isDate: {
 							msg: 'Incorrect field for date',
 						},
+						notEmpty: {
+							msg: "Start_date can't be empty",
+						},
 					},
 				},
 				end_date: {
@@ -64,6 +70,9 @@ class Delivery extends Model {
 					validate: {
 						isDate: {
 							msg: 'Incorrect field for date',
+						},
+						notEmpty: {
+							msg: "End_date can't be empty",
 						},
 					},
 				},
@@ -82,6 +91,11 @@ class Delivery extends Model {
 			foreignKey: 'deliveryman_id',
 			as: 'deliveryman',
 		});
+		this.belongsTo(model.File, {
+			foreignKey: 'signature_id',
+			as: 'signature',
+		});
+		this.hasMany(model.Report, { foreignKey: 'delivery_id', as: 'deliveries' });
 	}
 }
 

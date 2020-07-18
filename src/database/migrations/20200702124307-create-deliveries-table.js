@@ -27,6 +27,7 @@ module.exports = {
 			},
 			signature_id: {
 				type: Sequelize.INTEGER,
+				references: { model: 'files', key: 'id' },
 				allowNull: true,
 			},
 			canceled_at: {

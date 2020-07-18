@@ -45,15 +45,30 @@ module.exports = {
 
 			const recipient = await Recipient.findOne({ where: { id } });
 
-			const { adm_id } = request;
-
-			await recipient.update({ adm_id });
+			if (!recipient) {
+				return response.status(400).json({ error: 'Recipient not found' });
+			}
 
 			const adress = await recipient.update(request.body);
 
 			return response.json({ adress });
 		} catch (err) {
+			// if (!err.errors) {
+			// 	// Only development
+			// 	console.log(err);
+			// }
 			return response.status(400).json(catchMessages(err));
 		}
+	},
+	async delete(request, response) {
+		const { id } = request.params;
+
+		const isRecipient = await Recipient.findByPk(id);
+		if (!isRecipient) {
+			return response.status(400).json({ error: 'Recipient not found' });
+		}
+		await Recipient.destroy({ where: { id } });
+
+		return response.json();
 	},
 };

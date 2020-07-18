@@ -1,5 +1,3 @@
-// import nodemailerhbs from 'nodemailer-express-handlebars';
-// import 'express-handlebars';
 import nodemailer from 'nodemailer';
 import { resolve } from 'path';
 import handlebars from 'express-handlebars';

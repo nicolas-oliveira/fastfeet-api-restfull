@@ -30,6 +30,10 @@ class File extends Model {
 			foreignKey: 'avatar_id',
 			as: 'avatar',
 		});
+		this.belongsTo(models.Delivery, {
+			foreignKey: 'signature_id',
+			as: 'signature',
+		});
 	}
 }
 

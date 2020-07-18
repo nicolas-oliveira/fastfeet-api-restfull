@@ -1,5 +1,8 @@
-// md5: fast-feet-pé-ligeiro-melhor-app-do-brasilis
+// md5:
+// import md5 from 'md5';
+// const secret = md5('fastfeetpéligeiroparaagrandezadamaioria3');
+// console.log(`\n\n${secret}\n--------\n`);
 module.exports = {
-	secret: 'fd230d2a04469f1f7446cdef26f40f35',
-	expiresIn: '3d',
-}
+	secret: 'f8be2c01954d65a0021e850f040bccd0',
+	expiresIn: '7d',
+};

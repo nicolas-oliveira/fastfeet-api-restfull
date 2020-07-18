@@ -2,14 +2,15 @@ import Delivery from '../models/Delivery';
 import Deliveryman from '../models/Deliveryman';
 import Recipient from '../models/Recipient';
 import catchMessages from '../utils/catchMessages';
-import Mail from '../lib/Mail';
+// import Mail from '../lib/Mail';
 
 module.exports = {
 	async index(request, response) {
 		const { page = 1 } = request.query;
+
 		const deliveries = await Delivery.findAll({
-			limit: 10,
-			offset: (page - 1) * 10,
+			limit: 5,
+			offset: (page - 1) * 5,
 			attributes: [
 				'id',
 				'product',
@@ -60,21 +61,21 @@ module.exports = {
 
 			await Delivery.create({ recipient_id, deliveryman_id, product });
 
-			await Mail.sendMail({
-				to: `${deliverymanExists.name} <${deliverymanExists.email}>`,
-				subject: 'Nova entrega',
-				template: 'newdelivery',
-				context: {
-					deliveryman: deliverymanExists.name,
-					product,
-					street: recipientExists.street,
-					number: recipientExists.number.toString(),
-					city: recipientExists.city,
-					state: recipientExists.state,
-					country: recipientExists.country,
-					zip_code: recipientExists.zip_code,
-				},
-			});
+			// await Mail.sendMail({
+			// 	to: `${deliverymanExists.name} <${deliverymanExists.email}>`,
+			// 	subject: 'Nova entrega',
+			// 	template: 'newdelivery',
+			// 	context: {
+			// 		deliveryman: deliverymanExists.name,
+			// 		product,
+			// 		street: recipientExists.street,
+			// 		number: recipientExists.number.toString(),
+			// 		city: recipientExists.city,
+			// 		state: recipientExists.state,
+			// 		country: recipientExists.country,
+			// 		zip_code: recipientExists.zip_code,
+			// 	},
+			// });
 
 			return response
 				.status(200)
@@ -122,7 +123,7 @@ module.exports = {
 		const deliveryExists = await Delivery.findOne({ where: { id } });
 
 		if (!deliveryExists) {
-			return response.status(400).json({ error: 'Cannor find Delivery ID' });
+			return response.status(400).json({ error: 'Cannot find Delivery ID' });
 		}
 
 		await Delivery.destroy({ where: { id } });

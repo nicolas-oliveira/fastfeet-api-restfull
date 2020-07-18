@@ -4,11 +4,13 @@ import multer from 'multer';
 import AdmController from './controllers/AdmController';
 import SessionController from './controllers/SessionController';
 import RecipientController from './controllers/RecipientController';
-import DeliverymanController from './controllers/DeliverymanController';
-import FileController from './controllers/FileController';
 import DeliveryController from './controllers/DeliveryController';
-import InventoryController from './controllers/InventoryController';
-import FinishedInventoryController from './controllers/FinishedInventoryController';
+import DeliverymanController from './controllers/DeliverymanController';
+import RecallController from './controllers/RecallController';
+import FinishController from './controllers/FinishController';
+import AvatarController from './controllers/AvatarController';
+import ReportController from './controllers/ReportController';
+import ProblemController from './controllers/ProblemController';
 
 import authMiddleware from './middlewares/auth';
 
@@ -23,30 +25,42 @@ routes.put('/adm', authMiddleware, AdmController.update);
 
 routes.post('/session', SessionController.store);
 
-routes.get('/inventory/:id', InventoryController.index);
-routes.put('/inventory/:id', InventoryController.update);
+routes.get('/deliveryman/:id', RecallController.index);
+routes.put('/deliveryman/:id/recall', RecallController.update);
 
-routes.get('/inventory/:id/deliveries', FinishedInventoryController.index);
+routes.get('/deliveryman/:id/deliveries', FinishController.index);
+routes.put(
+	'/deliveryman/:id/finish',
+	upload.single('file'),
+	FinishController.update
+);
+
+routes.get('/delivery/problems', ReportController.index);
+routes.post('/delivery/:id/problems', ReportController.store);
+
+routes.get('/delivery/:id/problems', ProblemController.index);
+routes.delete('/delivery/:id/cancel', ProblemController.delete);
 
 routes.use(authMiddleware); // Use auth for all under
 
 routes.post('/recipient', RecipientController.store);
 routes.put('/recipient/:id', RecipientController.update);
+routes.delete('/recipient/:id', RecipientController.delete);
 
 routes.get('/deliveryman', DeliverymanController.index); // List all
-routes.get('/deliveryman/:id', DeliverymanController.index); // List one
+// routes.get('/deliveryman/:id', DeliverymanController.index); // List one
 routes.post('/deliveryman', DeliverymanController.store);
 routes.put('/deliveryman/:id', DeliverymanController.update);
 routes.delete('/deliveryman/:id', DeliverymanController.delete);
 routes.post(
-	'/deliveryman/:id/file',
+	'/deliveryman/:id/avatar',
 	upload.single('file'),
-	FileController.store
+	AvatarController.store
 );
 
-routes.post('/deliveries', DeliveryController.store);
-routes.get('/deliveries', DeliveryController.index);
-routes.put('/deliveries/:id', DeliveryController.update);
-routes.delete('/deliveries/:id', DeliveryController.delete);
+routes.post('/delivery', DeliveryController.store);
+routes.get('/delivery', DeliveryController.index);
+routes.put('/delivery/:id', DeliveryController.update);
+routes.delete('/delivery/:id', DeliveryController.delete);
 
 export default routes;

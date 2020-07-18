@@ -7,10 +7,11 @@ import Recipient from '../models/Recipient';
 import Deliveryman from '../models/Deliveryman';
 import File from '../models/File';
 import Delivery from '../models/Delivery';
+import Report from '../models/Report';
 
 const connection = new Sequelize(databaseConfig);
 
-const models = [Adm, Recipient, Deliveryman, File, Delivery];
+const models = [Adm, Recipient, Deliveryman, File, Delivery, Report];
 
 models
 	.map((model) => model.init(connection))

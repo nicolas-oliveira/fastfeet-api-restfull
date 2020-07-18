@@ -42,7 +42,7 @@ class Deliveryman extends Model {
 		this.belongsTo(model.File, { foreignKey: 'avatar_id', as: 'avatar' });
 		this.hasMany(model.Delivery, {
 			foreignKey: 'deliveryman_id',
-			as: 'deliveryman',
+			as: 'owner',
 		});
 	}
 }

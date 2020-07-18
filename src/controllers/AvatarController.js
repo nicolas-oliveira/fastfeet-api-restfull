@@ -8,7 +8,7 @@ module.exports = {
 		});
 
 		if (!deliverExists) {
-			return response.status(400).json({ error: 'ID Provider not found' });
+			return response.status(400).json({ error: 'Deliveryman not found' });
 		}
 
 		const { originalname: name, filename: path } = request.file;
