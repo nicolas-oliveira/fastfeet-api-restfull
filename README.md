@@ -6,139 +6,162 @@
   Desafio 3: FastFeet, continuando a aplicação
 </h3>
 
-<h3 align="center">
-  :warning: Etapa 2/4 do Desafio Final :warning:
-</h3>
+**Acesse o original da RocketSeat aqui**
 
-<p>Esse desafio faz parte do Desafio Final, que é uma aplicação completa (Back-end, Front-end e Mobile) que é avaliada para emissão do Certificado do Bootcamp GoStack, por isso é fundamental que ele seja feito com muito empenho!</p>
+# :rocket: O que é?
+FastFeet é uma API Restfull no qual fornece o necessário para o cadastro, acompanhamento, cancelamento e envio de emails de entregas de produtos da Empresa Fictícia FastFeet.
 
-<blockquote align="center">“Faça seu melhor, mas sempre com prazo de entrega”!</blockquote>
+# :blue_book: Documentação
 
-<p align="center">
-  <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/rocketseat/bootcamp-gostack-desafio-03?color=%2304D361">
+## Tecnologias usadas
 
-  <a href="https://rocketseat.com.br">
-    <img alt="Made by Rocketseat" src="https://img.shields.io/badge/made%20by-Rocketseat-%2304D361">
-  </a>
+`express` , `nodemailer` , `handlebars` , `bcrypt` , `multer` , `sequelize` e `jasonwebtoken`
 
-  <img alt="License" src="https://img.shields.io/badge/license-MIT-%2304D361">
+## Como executar
 
-  <a href="https://github.com/Rocketseat/bootcamp-gostack-desafio-03/stargazers">
-    <img alt="Stargazers" src="https://img.shields.io/github/stars/rocketseat/bootcamp-gostack-desafio-03?style=social">
-  </a>
-</p>
+São necessários vários processos para a configuração da aplicação. Entre eles:
 
-<p align="center">
-  <a href="#rocket-sobre-o-desafio">Sobre o desafio</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#entrega">Entrega</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#licença">Licença</a>
-</p>
+### **Configuração do sequelize**:
+ - `yarn sequelize db:migrate`
+### **Importação do insomnia**:
+ - ***[insomnia.json](./insomnia.json)***
+### **Configuração das variáveis de ambiente**:
+ - ******
+### ****:
+ - ******
+### **Comando de execução**:
+ - `yarn start`
 
-## :rocket: Sobre o desafio
+# Models
+### `Adm.js`
 
-Durante esse desafio vamos aprimorar a aplicação FastFeet que demos início no desafio anterior implementando funcionalidades que aprendemos durante as aulas até agora. 
+Administrador do sistema responsável pela criação atualização e remoção das tabelas **`Deliveryman`**, **`Recipients`** e **`Deliveries`**
 
-### **Funcionalidades do administrador**
+### `Delivery.js`
 
-Abaixo estão descritas as funcionalidades que você deve adicionar em sua aplicação para administradores.
+Guarda os relacionamentos necessários para a administração das entregas feitas pela API pública acessada pelo **`Deliveryman`**, possibilitando o cancelamento (**`canceled_at`**) , retirada (recall como **`start-date`**) e retirada (**`end_date`** e **`signature_id`** para a foto da assinatura do cliente no final da entrega).
 
-### **1. Gestão de entregadores**
+### `Deliveryman.js`
 
-Permita que o administrador possa cadastrar entregadores para a plataforma, o entregador deve possuir os seguintes campos:
+Entregador responsável pelas retiradas e finalizações, contém dados como **`nome`** , **`email`** , **`avatar_id`** que serão cadastrados pelo administrador.
 
-- id (id do entregador)
-- name (nome do entregador);
-- avatar_id (foto do entregador);
-- email (email do entregador)
-- created_at;
-- updated_at;
+### `File.js`
 
-Crie rotas para listagem/cadastro/atualização/remoção de entregadores;
+Guarda as informações necessárias do arquivo (***jpg***) para o **`avatar_id`** de **`Deliveryman`** e o **`signature_id`** de **`Delivery`** consecutivamente.
 
-Obs.: Essa funcionalidade é para administradores autenticados na aplicação.
+### `Recipient.js`
 
-### **2. Gestão de encomendas**
+Contém as informações necessárias de endereço dos destinatários que solicitaram o produto.
 
-Apesar do entregador estar cadastrado, ele não é independente dentro da plataforma, e você deve cadastrar encomendas para os entregadores.
+### `Report.js`
 
-Nessa funcionalidade criaremos um cadastro de encomendas por entregador, a encomenda possui os campos:
+Contém todas as notificações de problemas que é registrada na API pública acessada por **`Deliveryman`** que é relacionada à **`Delivery`** a partir de **`delivery_id`**.
 
-- id (id da entrega)
-- recipient_id (referência ao destinatário);
-- deliveryman_id (referência ao entregador);
-- signature_id (referência à uma assinatura do destinatário, que será uma imagem);
-- product (nome do produto a ser entregue);
-- canceled_at (data de cancelamento, se cancelada);
-- start_date (data de retirada do produto);
-- end_date (data final da entrega);
-- created_at;
-- updated_at;
+# :gear: Controllers
+### `AdmController.js`
 
-A **data de início** deve ser cadastrada assim que for feita a retirada do produto pelo entregador, e as retiradas só podem ser feitas entre as 08:00 e 18:00h.
+Métodos: `update` e `store` responsáveis pela criação e atualização do administrador do sistema.
 
-A **data de término** da entrega deve ser cadastrada quando o entregador finalizar a entrega:
+#### Rotas:
 
-Os campos **recipient_id** e **deliveryman_id** devem ser cadastrados no momento que for cadastrada a encomenda.
+- `POST`: **`url/adm`**
+- `PUT`: **`url/adm`**
 
-Quando a encomenda é **cadastrada** para um entregador, o entregador recebe um e-mail com detalhes da encomenda, com nome do produto e uma mensagem informando-o que o produto já está disponível para a retirada.
+### Request format:
 
-Crie rotas para listagem/cadastro/atualização/remoção de encomendas;
+**POST:**
 
-Obs.: Essa funcionalidade é para administradores autenticados na aplicação.
+```json
+{
+  "name": "name",
+  "password":"password",
+  "email": "email@email.com"
+}
+```
 
-### **Funcionalidades do entregador**
+**PUT**:
 
-Abaixo estão descritas as funcionalidades que você deve adicionar em sua aplicação para os entregadores.
+```json
+{
+  "name": "name",
+  "email": "email@email.com",
+  "password": "12345",
+  "oldPassword": "123456"
+}
+```
 
-### **1. Visualizar encomendas**
 
-Para que o entregador possa visualizar suas encomendas, ele deverá informar apenas seu ID de cadastro (ID do entregador no banco de dados). Essa funcionalidade deve retornar as encomendas atribuidas a ele, que **não estejam entregues ou canceladas**;
+### `AvatarController.js`
+Métodos: `store`, responsável pela criação do arquivo de File de **`Deliveryman`** em **`avatar_id`** e em **`File`** com **`name`** e **`path`** respectivamente.
 
-Permita também que ele liste apenas as encomendas que já foram **entregues** por ele, com base em seu ID de cadastro;
+#### Rotas:
 
-Exemplo de requisição: `GET https://fastfeet.com/deliveryman/1/deliveries`
+- `POST`: **`url/deliveryman/:id/avatar/`**
 
-### 2. Alterar status de encomendas
 
-Você deve permitir que o entregador tenha rotas para incluir uma data de retirada (start_date) e data de entrega (end_date) para as encomendas. O entregador só pode fazer **5 retiradas por dia**.
+### Request format:
 
-Obs.: Para a funcionalidade de finalizar a entrega, você deverá permitir o envio de uma imagem que irá preencher o campo signature_id da tabela de encomendas.
+**POST:**
+```
+Multipart format
+```
 
-### 3. Cadastrar problemas nas entregas
+### `DeliveryController.js`
 
-O entregador nem sempre conseguirá entregar as encomendas com sucesso, algumas vezes o destinatário pode estar ausente, ou o próprio entregador poderá ter algum problema com seu veículo na hora de entregar.
+Métodos: `index` , `store` , `update` e `delete`, responsável pela criação das Entregas
 
-A tabela `delivery_problems` deve conter os seguintes campos:
+#### Rotas:
 
-- delivery_id (referência da encomenda);
-- description (descrição do problema que o entregador teve);
-- created_at;
-- updated_at;
+- `POST`: **`url/delivery/`**
+- `PUT`: **`url/delivery/:id/`**
+- `GET`: **`url/delivery/`**
+- `DEL`: **`url/delivery/:id/`**
 
-Crie uma rota para a distribuidora listar todas as entregas com algum problema;
 
-Crie uma rota para listar todos os problemas de uma encomenda baseado no ID da encomenda.
+### Request format:
 
-Exemplo de requisição: `GET https://fastfeet.com/delivery/2/problems`
+**POST:**
+```
+{
+  "recipient_id": 22,
+  "deliveryman_id": 1,
+  "product": "Supreme Camisa Feminino"
+}
+```
 
-Crie uma rota para o entregador cadastrar problemas na entrega apenas informando seu ID de cadastro (ID da encomenda no banco de dados);
+**PUT:**
+```
+{
+  "recipient_id": 22,
+  "deliveryman_id": 1,
+  "product": "Supreme Camisa Feminino"
+}
+```
 
-Exemplo de requisição: `POST https://fastfeet.com/delivery/3/problems`
+**GET:**
+```
+No Body
+```
 
-Crie uma rota para a distribuidora cancelar uma entrega baseado no ID do problema. Esse cancelamento pode acontecer devido a gravidade do problema da entrega, por exemplo, em caso de perda da encomenda.
+**DELETE:**
+```
+No Body
+```
+### `DeliverymanController.js`
+Métodos: `store`
+### `FinishController.js`
+Métodos: `store`
+### `ProblemController.js`
+Métodos: `store`
+### `RecallController.js`
+Métodos: `store`
+### `RecipientController.js`
+Métodos: `store`
+### `ReportController.js`
+Métodos: `store`
+### `SessionController.js`
+Métodos: `store`
+- `post`: **`url/session`**
 
-Exemplo de requisição: `DELETE https://fastfeet.com/problem/1/cancel-delivery`
+## Relacionamentos
 
-Quando uma encomenda for cancelada, o entregador deve receber um e-mail informando-o sobre o cancelamento.
-
-## **📅 Entrega**
-
-Esse desafio **não precisa ser entregue** e não receberá correção. Além disso, o código fonte **não está disponível** por fazer parte do **desafio final**, que será corrigido para **certificação** do bootcamp. Após concluir o desafio, adicionar esse código ao seu Github é uma boa forma de demonstrar seus conhecimentos para oportunidades futuras.
-
-## **📝 Licença**
-
-Esse projeto está sob a licença MIT. Veja o arquivo [LICENSE](https://github.com/Rocketseat/bootcamp-gostack-desafio-03/blob/master/LICENSE.md) para mais detalhes.
-
----
-
-Feito com ♥ by Rocketseat 👋 [Entre na nossa comunidade!](https://discordapp.com/invite/gCRAFhc)
