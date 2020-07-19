@@ -14,11 +14,6 @@
 - [:blue_book: Documentação](#blue_book-documentação)
 	- [Tecnologias usadas](#tecnologias-usadas)
 	- [Como executar](#como-executar)
-		- [**Configuração do sequelize**:](#configuração-do-sequelize)
-		- [**Importação do insomnia**:](#importação-do-insomnia)
-		- [**Configuração das variáveis de ambiente**:](#configuração-das-variáveis-de-ambiente)
-		- [****:](#)
-		- [**Comando de execução**:](#comando-de-execução)
 - [Models](#models)
 		- [`Adm.js`](#admjs)
 		- [`Delivery.js`](#deliveryjs)
@@ -28,14 +23,8 @@
 		- [`Report.js`](#reportjs)
 - [:gear: Controllers](#gear-controllers)
 		- [`AdmController.js`](#admcontrollerjs)
-			- [Rotas:](#rotas)
-		- [Request format:](#request-format)
 		- [`AvatarController.js`](#avatarcontrollerjs)
-			- [Rotas:](#rotas-1)
-		- [Request format:](#request-format-1)
 		- [`DeliveryController.js`](#deliverycontrollerjs)
-			- [Rotas:](#rotas-2)
-		- [Request format:](#request-format-2)
 		- [`DeliverymanController.js`](#deliverymancontrollerjs)
 		- [`FinishController.js`](#finishcontrollerjs)
 		- [`ProblemController.js`](#problemcontrollerjs)
@@ -59,16 +48,18 @@ FastFeet é uma API Restfull no qual fornece o necessário para o cadastro, acom
 
 São necessários vários processos para a configuração da aplicação. Entre eles:
 
-### **Configuração do sequelize**:
+**Configuração do sequelize**:
  - `yarn sequelize db:migrate`
-### **Importação do insomnia**:
+
+**Importação do insomnia**:
  - ***[insomnia.json](./insomnia.json)***
-### **Configuração das variáveis de ambiente**:
+
+**Configuração das variáveis de ambiente**:
  - ******
-### ****:
- - ******
-### **Comando de execução**:
- - `yarn start`
+	****:
+
+**Comando de execução**:
+- `yarn start`
 
 # Models
 ### `Adm.js`
@@ -100,12 +91,12 @@ Contém todas as notificações de problemas que é registrada na API pública a
 
 Métodos: `update` e `store` responsáveis pela criação e atualização do administrador do sistema.
 
-#### Rotas:
+**Rotas**:
 
 - `POST`: **`url/adm`**
 - `PUT`: **`url/adm`**
 
-### Request format:
+**Request format**:
 
 **POST:**
 
@@ -133,12 +124,12 @@ Métodos: `update` e `store` responsáveis pela criação e atualização do adm
 
 Métodos: `store`, responsável pela criação do arquivo de File de **`Deliveryman`** em **`avatar_id`** e em **`File`** com **`name`** e **`path`** respectivamente.
 
-#### Rotas:
+**Rotas**:
 
 - `POST`: **`url/deliveryman/:id/avatar/`**
 
 
-### Request format:
+**Request format**:
 
 **POST:**
 ```
@@ -149,7 +140,7 @@ Multipart format
 
 Métodos: `index` , `store` , `update` e `delete`, responsável pela criação das Entregas
 
-#### Rotas:
+**Rotas**:
 
 - `POST`: **`url/delivery/`**
 - `PUT`: **`url/delivery/:id/`**
@@ -157,7 +148,7 @@ Métodos: `index` , `store` , `update` e `delete`, responsável pela criação d
 - `DEL`: **`url/delivery/:id/`**
 
 
-### Request format:
+**Request format**:
 
 **POST:**
 ```json
