@@ -28,6 +28,7 @@ module.exports = {
 
 		return response.json(deliveries);
 	},
+
 	async update(request, response) {
 		try {
 			if (!request.body.id) {

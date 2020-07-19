@@ -60,6 +60,7 @@ module.exports = {
 			return response.status(400).json(catchMessages(err));
 		}
 	},
+
 	async delete(request, response) {
 		const { id } = request.params;
 

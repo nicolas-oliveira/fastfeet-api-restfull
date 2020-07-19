@@ -45,9 +45,11 @@ module.exports = {
 				},
 			],
 		});
+
 		if (!delivery) {
 			return response.status(400).json({ error: 'Cannot find Delivery id' });
 		}
+
 		return response.json(delivery);
 	},
 
