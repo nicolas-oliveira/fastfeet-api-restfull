@@ -347,6 +347,6 @@ Métodos: `store` , responsável pela verificação e criação da sessão do ad
 
 ## Relacionamentos
 
-# 📝 Licensa
+# 📝 Licença
 
 Esse projeto está sob a licença MIT. Veja o arquivo [LICENSE](./LICENSE.md) para mais detalhes.
