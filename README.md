@@ -43,7 +43,7 @@ FastFeet é uma API Restfull no qual fornece o necessário para o cadastro, acom
 
 ## Tecnologias usadas
 
-`express` , `nodemailer` , `handlebars` , `bcrypt` , `multer` , `sequelize` e `jasonwebtoken`
+`express` , `nodemailer` , `handlebars` , `bcrypt` , `multer` , `sequelize` e `jsonwebtoken`
 
 ## Como executar
 
